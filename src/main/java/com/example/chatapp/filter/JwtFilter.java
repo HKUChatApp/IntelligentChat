@@ -70,7 +70,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
     private boolean isPermittedRequest(HttpServletRequest request) {
         String uri = request.getRequestURI();
         // 根据实际情况判断登录请求的 URI，例如 "/login" 路径
-        return uri.startsWith("/login")||uri.startsWith("/swagger")||uri.startsWith("/v3/api-docs")||uri.startsWith("/test");
+        return uri.startsWith("/login")||uri.startsWith("/swagger")||uri.startsWith("/v3/api-docs")||uri.startsWith("/test")||uri.startsWith("/file");
     }
 
 }

@@ -38,6 +38,7 @@ public class FileController {
     @ApiOperation(value = "Receive file")
     @PostMapping("/get")
     public Response fileAccept(@RequestParam("data") MultipartFile file) throws Exception{
+        System.out.println("data send");
         String name=file.getOriginalFilename();
         String path = MultiFile.fileStore(file.getBytes(),name);
         return Response.ok(name);//返回文件路径
@@ -79,7 +80,7 @@ public class FileController {
         String path = MultiFile.fileStore(file.getBytes(),name);
         int id=Integer.parseInt(name.split("_")[0]);
 
-        String url="http://10.68.95.179:8080/file/post?name="+name;
+        String url="http://16.163.58.122:8080/file/post?name="+name;
         Photo_wall photo=new Photo_wall(id,url);
         photoWallService.addPhoto_wall(photo);
 

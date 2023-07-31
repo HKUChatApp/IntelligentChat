@@ -14,17 +14,21 @@ public class MultiFile {
     public static AtomicInteger count = new AtomicInteger(0);
     public static ConcurrentHashMap<String,String> nameToPath = new ConcurrentHashMap<>();
     public static boolean dirExist = false;
+
     public static String fileStore(byte[] data,String filename) throws Exception{//返回路径,filename包括后缀名
+        System.out.println("fuck!!!!!!");
+        String currentDirectory = System.getProperty("user.dir")+"/FileStorage";
         count.incrementAndGet();
         if(!dirExist) {
             synchronized (MultiFile.class) {
                 if(!dirExist) {
-                    String tmp0 = "../FileStorage";
+                    String tmp0 = currentDirectory;
                     new File(tmp0).mkdir();
                 }
             }
         }
-        String tmp="../FileStorage/"+filename;
+        String tmp=currentDirectory+"/"+filename;
+        System.out.println(data.length);
         fileStore(tmp,data);
         String path = new File(tmp).getAbsolutePath();
         nameToPath.put(filename,path);
@@ -39,7 +43,7 @@ public class MultiFile {
 
     public static boolean fileGet(String name, HttpServletResponse response) {
         try {
-            String path = "../FileStorage/"+name;
+            String path = System.getProperty("user.dir")+"/FileStorage"+"/"+name;
             String filename = name;
             response.addHeader("Content-Disposition", "attachment;fileName=" + filename);
             OutputStream output = response.getOutputStream();
@@ -62,7 +66,7 @@ public class MultiFile {
     public static boolean fileDelete(String name) {
            String path = nameToPath.get(name);
            if(path != null) nameToPath.remove(name);
-           else path="../FileStorage/"+name;
+           else path=System.getProperty("user.dir")+"/FileStorage"+"/"+name;
            File file = new File(path);
            if(file.exists()) {
                return file.delete();
