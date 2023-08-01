@@ -6,6 +6,7 @@ import com.example.chatapp.model.vo.RegisterRequest;
 import com.example.chatapp.service.EmailService;
 import com.example.chatapp.service.Personal_chatService;
 import com.example.chatapp.service.UserService;
+import com.example.chatapp.utilize.AESUtils;
 import com.example.chatapp.utilize.JwtUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -62,11 +63,11 @@ public class LoginController {
 
     @ApiOperation(value = "login")
     @PostMapping("/go")
-    public Response go(@RequestBody User user){
+    public Response go(@RequestBody User user) throws Exception {
         if(userService.getUserByUsername(user.getUsername())==null) {
             return Response.error("No such user!");
         }
-        else if(userService.getUserByUsername(user.getUsername()).getPassword().equals(user.getPassword())) {
+        else if(AESUtils.decrypt(userService.getUserByUsername(user.getUsername()).getPassword()).equals(AESUtils.decrypt(user.getPassword()))) {
             // 登录成功，生成JWT令牌
             String jwtToken = JwtUtils.generateToken(user.getId(),user.getUsername());
 
