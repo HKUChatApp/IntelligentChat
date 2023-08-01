@@ -3,6 +3,7 @@ package com.example.chatapp.service.impl;
 import com.example.chatapp.model.po.User;
 import com.example.chatapp.service.EmailService;
 import com.example.chatapp.service.UserService;
+import com.example.chatapp.utilize.AESUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.mail.SimpleMailMessage;
@@ -67,7 +68,7 @@ public class EmailServiceImpl implements EmailService {
         return email.matches(regex);
     }
 
-    @Override
+    /*@Override
     public void findPassword(String username){
         User user=userService.getUserByUsername(username);
         String to=user.getMail();
@@ -79,6 +80,28 @@ public class EmailServiceImpl implements EmailService {
         message.setSubject("Recover Password");
         message.setText("Your password is: " + password + "\nFor security reasons, please change your password in time after logging in!");
         mailSender.send(message);
+    }*/
+    public void findPassword(String username) {
+        User user = userService.getUserByUsername(username);
+        String to = user.getMail();
+        String encryptedPassword = user.getPassword(); // 密码是已经加密过的
+        String decryptedPassword;
+
+        try {
+            decryptedPassword = AESUtils.decrypt(encryptedPassword); // 解密密码
+        } catch (Exception e) {
+            // 处理解密异常
+            // 在实际应用中，需要根据具体情况处理解密可能出现的异常
+            decryptedPassword = "Decrypt unsuccessfully";
+        }
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setFrom("Random_Chatapp@outlook.com");
+        message.setSubject("Recover Password");
+        message.setText("Your password is: " + decryptedPassword + "\nFor security reasons, please change your password in time after logging in!");
+        mailSender.send(message);
     }
+
 }
 
