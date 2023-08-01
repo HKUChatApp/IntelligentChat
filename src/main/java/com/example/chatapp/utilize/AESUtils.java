@@ -7,7 +7,7 @@ import java.util.Base64;
 public class AESUtils {
 
     private static final String ALGORITHM = "AES";
-    private static final String KEY = "aes_key"; // 需要确保和前端加密时使用的密钥相同
+    private static final String KEY = "aes_key_chatapps"; // 需要确保和前端加密时使用的密钥相同
 
     public static String encrypt(String value) throws Exception {
         SecretKeySpec secretKey = new SecretKeySpec(KEY.getBytes(), ALGORITHM);
