@@ -17,7 +17,7 @@ public class EmailConfig {
         mailSender.setPort(587);
 
         mailSender.setUsername("Random_Chatapp@outlook.com");
-        mailSender.setPassword("Chatapp666");
+        mailSender.setPassword("Chatapp123");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
