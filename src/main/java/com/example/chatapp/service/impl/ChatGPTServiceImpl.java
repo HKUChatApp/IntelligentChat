@@ -9,7 +9,7 @@ public class ChatGPTServiceImpl implements ChatGPTService {
     @Override
     public String computeQuestion(String question) {
         ChatGPT chatGPT = ChatGPT.builder()
-                .apiKey("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")
+                .apiKey("")
                 .apiHost("https://api.openai.com/") // 反向代理地址
                 .build()
                 .init();
@@ -18,7 +18,7 @@ public class ChatGPTServiceImpl implements ChatGPTService {
     @Override
     public String translateQuestion(String question) {
         ChatGPT chatGPT = ChatGPT.builder()
-                .apiKey("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")
+                .apiKey("")
                 .apiHost("https://api.openai.com/") // 反向代理地址
                 .build()
                 .init();
