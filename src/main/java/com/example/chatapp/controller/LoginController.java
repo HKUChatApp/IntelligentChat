@@ -67,7 +67,7 @@ public class LoginController {
         if(userService.getUserByUsername(user.getUsername())==null) {
             return Response.error("No such user!");
         }
-        else if(AESUtils.decrypt(userService.getUserByUsername(user.getUsername()).getPassword()).equals(AESUtils.decrypt(user.getPassword()))) {
+        else if(userService.getUserByUsername(user.getUsername()).getPassword().equals(user.getPassword())) {
             // 登录成功，生成JWT令牌
             String jwtToken = JwtUtils.generateToken(user.getId(),user.getUsername());
 
